@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: auto;
+      gap: 20px;
+    }
+    .left, .right {
+      flex: 1;
+      min-width: 300px;
+    }
+    .left {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .right img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+
+    /* TRY FREE LESSON Button */
+    #tryButton {
+      margin-top: 15px;
+      padding: 12px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    #tryButton:hover {
+      background-color: #0056b3;
+    }
+
+    /* Student form */
+    #lessonForm {
+      display: none; 
+      margin-top: 15px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 100%;
+      animation: slideDown 0.5s ease forwards;
+    }
+    #lessonForm input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    #lessonForm button {
+      margin-top: 12px;
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #lessonForm button:hover {
+      background-color: #218838;
+    }
+
+    /* Slide down animation */
+    @keyframes slideDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive for mobile */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+
+    /* Student list */
+    #studentList {
+      margin-top: 20px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+    #studentList h3 { margin-bottom: 10px; }
+    #studentList ul { list-style: none; padding-left: 0; }
+    #studentList li { padding: 5px 0; border-bottom: 1px solid #ddd; }
+
+    /* Home button */
+    #homeButton {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    }
+    #homeButton:hover {
+      background-color: #cc5200;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Contact Me</h1>
+
+  <div class="container">
+    <!-- Left side -->
+    <div class="left">
+      <p><strong>WhatsApp:</strong> +92 451 067015</p>
+      <p><strong>Email:</strong> tariq900662@gmail.com</p>
+
+      <form>
+        <label>Your Name:</label>
+        <input type="text" name="name" placeholder="Enter your name">
+
+        <label>Your Message:</label>
+        <textarea name="message" rows="4" placeholder="Write your message"></textarea>
+
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
+    <!-- Right side -->
+    <div class="right">
+      <img src="quranpic.png" alt="My Photo">
+
+      <!-- TRY FREE LESSON Button -->
+      <button id="tryButton">TRY FREE LESSON</button>
+
+      <!-- Form for student info -->
+      <form id="lessonForm">
+        <label>Name:</label>
+        <input type="text" name="studentName" placeholder="Enter your name" required>
+
+        <label>Email:</label>
+        <input type="email" name="studentEmail" placeholder="Enter your email" required>
+
+        <label>Password:</label>
+        <input type="password" name="studentPassword" placeholder="Enter password" required>
+
+        <label>Confirm Password:</label>
+        <input type="password" name="studentConfirmPassword" placeholder="Confirm password" required>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <!-- Student List -->
+      <div id="studentList">
+        <h3>Student List:</h3>
+        <ul id="list"></ul>
+      </div>
+
+      <!-- Home Page Button -->
+      <a href="index.html" id="homeButton">Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    const tryButton = document.getElementById('tryButton');
+    const lessonForm = document.getElementById('lessonForm');
+    const studentList = document.getElementById('list');
+    let students = [];
+
+    tryButton.addEventListener('click', () => {
+      if (lessonForm.style.display === "none" || lessonForm.style.display === "") {
+        lessonForm.style.display = "block";
+        tryButton.textContent = "CLOSE FORM";
+      } else {
+        lessonForm.style.display = "none";
+        tryButton.textContent = "TRY FREE LESSON";
+      }
+    });
+
+    lessonForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = this.studentName.value;
+      const email = this.studentEmail.value;
+      const password = this.studentPassword.value;
+      const confirmPassword = this.studentConfirmPassword.value;
+
+      if(password !== confirmPassword){
+        alert('Passwords do not match!');
+        return;
+      }
+
+      students.push({name, email});
+
+      studentList.innerHTML = '';
+      students.forEach((student, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${index + 1}. Name: ${student.name}, Email: ${student.email}`;
+        studentList.appendChild(li);
+      });
+
+      this.reset();
+      alert('Student added successfully!');
+    });
+  </script>
+
+</body>
+</html>
